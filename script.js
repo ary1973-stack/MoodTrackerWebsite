@@ -101,6 +101,53 @@ function updateStreak() {
     return streakData;
 }
 
+// Authentication Logic
+// Sign Up Function
+function handleSignUp(event) {
+    event.preventDefault();
+    const username = document.getElementById("signup-username").value;
+    const email = document.getElementById("signup-email").value;
+    const password = document.getElementById("signup-password").value;
+
+    // Check if user already exists
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const existingUser = users.find(user => user.email === email);
+
+    if (existingUser) {
+        showToast("User with this email already exists!");
+        return;
+    }
+
+    // Save new user to LocalStorage
+    users.push({ username, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+    showToast("Sign Up successful! Please login.");
+    setTimeout(() => {
+        navigateTo("login.html");
+    }, 2000);
+}
+
+// Login Function
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    // Check if user exists
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (user) {
+        localStorage.setItem("loggedInUser", JSON.stringify(user));
+        showToast("Login successful!");
+        setTimeout(() => {
+            navigateTo("index.html");
+        }, 2000);
+    } else {
+        showToast("Invalid email or password!");
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     // Page Load Transition Animation
     gsap.from(".page-transition", { transform: "translateY(100%)", duration: 0.5 });
@@ -166,4 +213,16 @@ document.addEventListener("DOMContentLoaded", function() {
             );
         });
     });
+
+    // Sign Up Form Submission
+    const signupForm = document.getElementById("signup-form");
+    if (signupForm) {
+        signupForm.addEventListener("submit", handleSignUp);
+    }
+
+    // Login Form Submission
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+        loginForm.addEventListener("submit", handleLogin);
+    }
 });

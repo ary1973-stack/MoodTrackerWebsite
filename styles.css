@@ -282,6 +282,66 @@ nav ul li a:hover {
     line-height: 1.5;
 }
 
+/* Login and Sign Up Form Styling */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-btn {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #ff5076;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+    background: #ff2d5a;
+    transform: scale(1.1);
+}
+
+.auth-link {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+}
+
+.auth-link a {
+    color: #ff5076;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
 /* Footer */
 footer {
     text-align: center;
