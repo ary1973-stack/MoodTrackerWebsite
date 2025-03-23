@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood History - MoodTracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="page-transition"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">MoodTracker</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="mood.html">Mood Selection</a></li>
+            <li><a href="history.html">Mood History</a></li>
+        </ul>
+    </nav>
+
+    <!-- History Section -->
+    <div class="container">
+        <h1 class="title">Your Mood History</h1>
+        <div id="history-container"></div>
+        <button class="history-btn" onclick="navigateTo('mood.html')">Back to Mood Selection</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 MoodTracker. All Rights Reserved.</p>
+        <p>Developed by Aryan, Akshat, Shalu | <a href="mailto:moodtracker25@gmail.com">Contact Us</a></p>
+    </footer>
+
+    <script>
+        function loadMoodHistory() {
+            let historyContainer = document.getElementById("history-container");
+            let moodHistory = JSON.parse(localStorage.getItem("moods")) || [];
+
+            // Fallback sample data if localStorage is empty
+            if (moodHistory.length === 0) {
+                moodHistory = [
+                    { mood: "Happy 😊", date: "2025-03-20 10:30 AM" },
+                    { mood: "Sad 😢", date: "2025-03-21 02:15 PM" },
+                    { mood: "Relaxed 😌", date: "2025-03-22 06:00 PM" }
+                ];
+                historyContainer.innerHTML = "<p class='sample-data-notice'>Sample data for demo purposes. Select a mood to start tracking!</p>";
+            }
+
+            moodHistory.forEach((entry, index) => {
+                let moodEntry = document.createElement("div");
+                moodEntry.classList.add("mood-entry");
+                moodEntry.innerHTML = `${entry.mood} - ${entry.date}`;
+                historyContainer.appendChild(moodEntry);
+            });
+
+            // Add animation only after all elements are added to the DOM
+            setTimeout(() => {
+                gsap.to(".mood-entry", { opacity: 1, y: 0, stagger: 0.2, duration: 1 });
+            }, 300);
+
+            // Animate the title
+            gsap.from(".title", { opacity: 0, y: -50, duration: 1.2, ease: "power2.out" });
+            gsap.from(".history-btn", { opacity: 0, scale: 0.8, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" });
+        }
+
+        // Call the function to load history when the page loads
+        document.addEventListener("DOMContentLoaded", loadMoodHistory);
+    </script>
+</body>
+</html>
